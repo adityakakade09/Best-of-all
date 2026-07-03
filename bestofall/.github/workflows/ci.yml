@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: bestofall
+          POSTGRES_PASSWORD: bestofall
+          POSTGRES_DB: bestofall
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bestofall"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://bestofall:bestofall@localhost:5432/bestofall
+      REDIS_URL: redis://localhost:6379
+      JWT_ACCESS_SECRET: ci_access_secret
+      JWT_REFRESH_SECRET: ci_refresh_secret
+      AUTH_DEV_MODE: 'true'
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build shared package
+        run: npm run build -w packages/shared
+
+      - name: Lint API
+        run: npm run lint -w apps/api
+
+      - name: Lint Web
+        run: npm run lint -w apps/web
+
+      - name: Run DB migrations
+        run: npm run db:migrate -w apps/api
+
+      - name: Test API
+        run: npm run test -w apps/api
+
+      - name: Test Web
+        run: npm run test -w apps/web
+
+      - name: Build API
+        run: npm run build -w apps/api
+
+      - name: Build Web
+        run: npm run build -w apps/web

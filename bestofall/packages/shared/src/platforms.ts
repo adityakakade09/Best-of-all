@@ -1,0 +1,156 @@
+import { PlatformMeta } from './types';
+
+/**
+ * Central registry of every platform BestOfAll aggregates.
+ * `hasOfficialIntegration: false` platforms are wired through the mock
+ * provider interface (see apps/api/src/providers) until an official
+ * partnership / public API is available — never scraped.
+ */
+export const PLATFORMS: PlatformMeta[] = [
+  {
+    id: 'amazon',
+    name: 'Amazon',
+    type: 'ecommerce',
+    categories: ['electronics', 'fashion', 'gifts', 'groceries', 'other'],
+    logo: '/logos/amazon.svg',
+    color: '#FF9900',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.amazon.in',
+  },
+  {
+    id: 'flipkart',
+    name: 'Flipkart',
+    type: 'ecommerce',
+    categories: ['electronics', 'fashion', 'gifts', 'groceries', 'other'],
+    logo: '/logos/flipkart.svg',
+    color: '#2874F0',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.flipkart.com',
+  },
+  {
+    id: 'myntra',
+    name: 'Myntra',
+    type: 'ecommerce',
+    categories: ['fashion'],
+    logo: '/logos/myntra.svg',
+    color: '#FF3F6C',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.myntra.com',
+  },
+  {
+    id: 'ajio',
+    name: 'Ajio',
+    type: 'ecommerce',
+    categories: ['fashion'],
+    logo: '/logos/ajio.svg',
+    color: '#2B2B2B',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.ajio.com',
+  },
+  {
+    id: 'swiggy',
+    name: 'Swiggy',
+    type: 'food_delivery',
+    categories: ['food'],
+    logo: '/logos/swiggy.svg',
+    color: '#FC8019',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.swiggy.com',
+  },
+  {
+    id: 'zomato',
+    name: 'Zomato',
+    type: 'food_delivery',
+    categories: ['food'],
+    logo: '/logos/zomato.svg',
+    color: '#E23744',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.zomato.com',
+  },
+  {
+    id: 'dominos',
+    name: "Domino's",
+    type: 'food_delivery',
+    categories: ['food'],
+    logo: '/logos/dominos.svg',
+    color: '#0078AE',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.dominos.co.in',
+  },
+  {
+    id: 'pizzahut',
+    name: 'Pizza Hut',
+    type: 'food_delivery',
+    categories: ['food'],
+    logo: '/logos/pizzahut.svg',
+    color: '#EE3831',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.pizzahut.co.in',
+  },
+  {
+    id: 'blinkit',
+    name: 'Blinkit',
+    type: 'quick_commerce',
+    categories: ['groceries', 'medicines', 'other'],
+    logo: '/logos/blinkit.svg',
+    color: '#F8CB46',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://blinkit.com',
+  },
+  {
+    id: 'zepto',
+    name: 'Zepto',
+    type: 'quick_commerce',
+    categories: ['groceries', 'medicines', 'other'],
+    logo: '/logos/zepto.svg',
+    color: '#7B2FF7',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.zeptonow.com',
+  },
+  {
+    id: 'instamart',
+    name: 'Instamart',
+    type: 'quick_commerce',
+    categories: ['groceries', 'medicines', 'other'],
+    logo: '/logos/instamart.svg',
+    color: '#FF6B35',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.swiggy.com/instamart',
+  },
+  {
+    id: 'bigbasket',
+    name: 'BigBasket',
+    type: 'quick_commerce',
+    categories: ['groceries', 'other'],
+    logo: '/logos/bigbasket.svg',
+    color: '#84C225',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.bigbasket.com',
+  },
+  {
+    id: 'pharmeasy',
+    name: 'PharmEasy',
+    type: 'pharmacy',
+    categories: ['medicines'],
+    logo: '/logos/pharmeasy.svg',
+    color: '#00A94F',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://pharmeasy.in',
+  },
+  {
+    id: 'apollo247',
+    name: 'Apollo 247',
+    type: 'pharmacy',
+    categories: ['medicines'],
+    logo: '/logos/apollo247.svg',
+    color: '#006CB5',
+    hasOfficialIntegration: false,
+    affiliateBaseUrl: 'https://www.apollo247.com',
+  },
+];
+
+export const getPlatform = (id: string): PlatformMeta | undefined =>
+  PLATFORMS.find((p) => p.id === id);
+
+export const platformsForCategory = (category: string): PlatformMeta[] =>
+  PLATFORMS.filter((p) => p.categories.includes(category as never));

@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-canvas-light dark:bg-canvas-dark text-ink dark:text-ink-inverse font-body antialiased transition-colors duration-300;
+  }
+  ::selection {
+    @apply bg-signal-indigo/25;
+  }
+  :focus-visible {
+    outline: 2px solid #4f6bff;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-glass-light dark:bg-glass-dark backdrop-blur-glass border border-glass-light-border dark:border-glass-dark-border shadow-glass;
+  }
+  .glass-panel-hover {
+    @apply transition-all duration-300 hover:shadow-glass-lg hover:-translate-y-0.5;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-signal-indigo text-white font-medium px-5 py-2.5 shadow-[0_8px_24px_rgba(79,107,255,0.35)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_10px_30px_rgba(79,107,255,0.45)] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full glass-panel px-5 py-2.5 font-medium transition-all duration-200 hover:-translate-y-0.5;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium glass-panel transition-all duration-200 hover:-translate-y-0.5 cursor-pointer select-none;
+  }
+  .chip-active {
+    @apply bg-signal-indigo text-white border-transparent shadow-[0_6px_18px_rgba(79,107,255,0.4)];
+  }
+  .skeleton {
+    @apply relative overflow-hidden bg-black/5 dark:bg-white/5 rounded-xl2;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent animate-shimmer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Slim, quiet scrollbar to match the glass aesthetic */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 130, 160, 0.35);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
